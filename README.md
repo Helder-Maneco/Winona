@@ -1,42 +1,69 @@
- Winona | Industrial Inventory Intelligence
- 
-Winona não é apenas um sistema de gestão de estoque; é uma plataforma de inteligência logística desenhada para erradicar a ineficiência e o desperdício de capital. Através de uma arquitetura modular e análise preditiva, a Winona transforma dados brutos de inventário em decisões estratégicas em tempo real.
+# 💎 Winona | Industrial Inventory Intelligence
 
-🏗️ Arquitetura do Sistema
-A plataforma opera sob uma estrutura de quatro camadas fundamentais, garantindo escalabilidade e robustez:
+<p align="center">
+  <img src="https://img.shields.io/badge/Arch_Linux-E91E63?style=for-the-badge&logo=arch-linux&logoColor=white" />
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+</p>
 
-1. Camada de Utilizador (Frontend Omnichannel)
-Interface responsiva projetada para alta performance em qualquer dispositivo:
+> **Status do Projeto:** 10 bilhões por cento operacional (Em desenvolvimento)  
+> **Missão:** Erradicar a ineficiência logística e o desperdício de capital através da ciência de dados aplicada.
 
-Desktop: Controle total para gestão e administração centralizada.
+Winona não é apenas um sistema de gestão de estoque; é uma **plataforma de inteligência preditiva**. Ela transforma dados brutos de inventário em decisões estratégicas em tempo real, garantindo que o fluxo de matéria e capital nunca seja interrompido por falhas humanas ou processos obsoletos.
 
-Tablet: Agilidade operacional para contagens e auditorias de inventário no chão de loja.
+---
 
-Mobile: Visibilidade imediata de KPIs críticos para supervisores e stakeholders.
+## 🏗️ Arquitetura de Camadas
+A plataforma opera sob uma estrutura de quatro camadas fundamentais, garantindo escalabilidade e robustez de nível industrial.
 
-2. Módulos Core
-O ecossistema Winona é dividido em módulos de alta especialização:
+### 📱 Camada de Utilizador (Omnichannel)
+Interface minimalista projetada para alta performance, adaptando-se às necessidades do operador:
+*   **💻 Desktop:** Central de comando para gestão administrativa e configurações profundas.
+*   **📟 Tablet:** Otimizado para agilidade operacional no chão de loja e auditorias rápidas.
+*   **📱 Mobile:** Dashboard compacto para visualização imediata de KPIs por supervisores.
 
-Dashboard Executivo: Monitoramento de saúde financeira e operacional (Acurácia, Ruptura e Giro).
+---
 
-Gestão de Ativos (Produtos): Controle granular de SKUs, margens, categorias e lead times.
+## 🧩 Módulos Core
+O ecossistema Winona é dividido em unidades funcionais de alta especialização:
 
-Logística de Entrada/Saída: Registro preciso de fluxos, desde a recepção de mercadoria até vendas, transferências ou perdas.
+| Módulo | Funcionalidade | KPIs Alvo |
+| :--- | :--- | :--- |
+| **Dashboard Executivo** | Monitoramento de saúde financeira em tempo real. | Giro, Ruptura e Acurácia. |
+| **Gestão de Ativos** | Controle granular de SKUs, categorias e fornecedores. | Lead Time e Margem. |
+| **Logística de Fluxo** | Registro de entradas, saídas, perdas e transferências. | Diferença vs Pedido. |
 
-3. Inteligência Winona (O Diferencial Científico)
-Onde a ciência de dados encontra a logística. A Winona não apenas armazena; ela pensa. O sistema analisa padrões para emitir alertas preditivos:
+---
 
-Previsão de Ruptura: "Este produto esgotará em 7 dias."
+## 🧠 Inteligência Winona (O Diferencial Científico)
+Enquanto sistemas comuns apenas armazenam, a Winona **processa e antecipa**. O motor de análise preditiva gera alertas críticos:
 
-Análise de Capital Imobilizado: "Item estagnado há 45 dias; capital de giro em risco."
+*   ⚠️ **Previsão de Ruptura:** Detecta quando um item esgotará com base no histórico de consumo.
+*   ⚠️ **Capital Imobilizado:** Identifica itens estagnados que estão "sequestrando" o fluxo de caixa.
+*   ⚠️ **Reposição Otimizada:** Calcula o momento exato do pedido cruzando o estoque atual com o *lead time*.
 
-Otimização de Compra: Identificação do momento exato para reposição baseada no lead time.
+---
 
-🛠️ Stack Tecnológica
-Runtime: Node.js + TypeScript
+## 🛠️ Stack Tecnológica (Fatos e Física)
 
-Interface: Vite / Javascript (Projetado para ser minimalista e funcional)
+*   **Core:** `Node.js` + `TypeScript`
+*   **Frontend:** `Vite` + `JavaScript`
+*   **Database:** `PostgreSQL`
+*   **Environment:** `Arch Linux`
 
-Persistência de Dados: PostgreSQL
+---
 
-Infraestrutura: Arch Linux Environment
+## 🚀 Como rodar o Laboratório
+```bash
+# 1. Clone o repositório
+git clone [https://github.com/Helder-Maneco/Winona.git](https://github.com/Helder-Maneco/Winona.git)
+
+# 2. Entre no diretório do backend
+cd Winona/backend
+
+# 3. Instale as dependências
+npm install
+
+# 4. Inicie o motor de desenvolvimento
+npm run dev
