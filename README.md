@@ -1,4 +1,4 @@
-# 💎 Winona | Industrial Inventory Intelligence
+#  Winona | Industrial Inventory Intelligence
 
 <p align="center">
   <img src="https://img.shields.io/badge/Arch_Linux-E91E63?style=for-the-badge&logo=arch-linux&logoColor=white" />
