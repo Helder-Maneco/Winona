@@ -1,3 +1,7 @@
+-- =============================
+-- WINONA STOCK - BANCO DE DADOS
+-- =============================
+
 CREATE TABLE usuarios (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
@@ -20,8 +24,8 @@ CREATE TABLE produtos (
     estoque_minimo INTEGER DEFAULT 0,
     estoque_maximo INTEGER DEFAULT 0, 
     lead_time_dias INTEGER DEFAULT 0,
-    qualidade_atual INTEGER DEFAULT 0,
-    possui_validade BOOLEAN DEFAULT false
+    quantidade_atual INTEGER DEFAULT 0,
+    possui_validade BOOLEAN DEFAULT false,
     dias_validade INTEGER,
     ativo BOOLEAN DEFAULT true
 );
@@ -32,7 +36,7 @@ CREATE TABLE movimentacoes (
     tipo VARCHAR(20) CHECK (tipo IN ('entrada', 'saida', 'ajuste')),
     quantidade_movimentada INTEGER NOT NULL,
     custo_unitario DECIMAL(10,2),
-    usurio_id INTEGER REFERENCES usuarios(id),
+    usuario_id INTEGER REFERENCES usuarios(id),
     data TIMESTAMP DEFAULT NOW(),
     observacao TEXT
 );
@@ -44,4 +48,22 @@ CREATE TABLE inventarios (
     status VARCHAR(20) CHECK (status IN ('aberto', 'em_andamento', 'finalizado')),
     usuario_id INTEGER REFERENCES usuarios(id),
     observacoes TEXT,
+    acuracia_percentual DECIMAL(5,2)
+);
 
+CREATE TABLE itens_inventario (
+    id SERIAL PRIMARY KEY,
+    inventario_id INTEGER REFERENCES inventarios(id),
+    produto_id INTEGER REFERENCES produtos(id),
+    quantidade_sistema INTEGER NOT NULL,
+    quantidade_fisica INTEGER NOT NULL,
+    divergencia INTEGER GENERATED ALWAYS AS (quantidade_fisica - quantidade_sistema) STORED,
+    usuario_contagem_id INTEGER REFERENCES usuarios(id),
+    data_contagem TIMESTAMP DEFAULT NOW()
+);
+
+-- Índices para Performance
+CREATE INDEX idx_produtos_ume ON produtos(ume);
+CREATE INDEX idx_movimentacoes_produto ON movimentacoes(produto_id);
+CREATE INDEX idx_movimentacoes_data ON movimentacoes(data);
+CREATE INDEX idx_usuarios_email ON usuarios(email);
