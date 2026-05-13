@@ -28,3 +28,4 @@ Thumbs.db
 # Testes
 coverage/
 .nyc_output/
+node_modules/
