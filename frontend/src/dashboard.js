@@ -62,7 +62,7 @@ async function carregarMetricas() {
     // Entradas e saídas do mês
     if (resumo) {
         const entradas = resumo.find(r => r.tipo === 'entrada');
-        const saidas   = resumo.find(r => r.tipo === 'saida');
+        const saidas = resumo.find(r => r.tipo === 'saida');
 
         document.getElementById('totalEntradas').textContent =
             entradas ? Number(entradas.total_quantidade).toLocaleString('pt-AO') : '0';
@@ -84,8 +84,8 @@ function renderAlertas(alertas) {
         const badge = a.tipo_alerta === 'ruptura'
             ? '<span class="badge badge-red">Sem estoque</span>'
             : a.tipo_alerta === 'estoque_baixo'
-            ? '<span class="badge badge-orange">Baixo</span>'
-            : '<span class="badge badge-green">Excesso</span>';
+                ? '<span class="badge badge-orange">Baixo</span>'
+                : '<span class="badge badge-green">Excesso</span>';
 
         return `
             <tr>
