@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Winona Stock — Acesso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="/src/style.css">
+  </head>
+  <body class="login-page">
+
+    <div class="login-split">
+
+      <!-- Lado esquerdo — identidade -->
+      <div class="login-brand">
+        <div class="login-brand-inner">
+          <div class="brand-logo">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <rect width="40" height="40" rx="10" fill="#2563EB"/>
+              <path d="M10 28L20 12L30 28H10Z" fill="white" fill-opacity="0.9"/>
+              <rect x="15" y="22" width="10" height="6" fill="#2563EB"/>
+            </svg>
+            <span>Winona Stock</span>
+          </div>
+
+          <div class="brand-copy">
+            <h1>Gestão de estoque<br/>simples e precisa.</h1>
+            <p>Controle entradas, saídas e inventário<br/>em tempo real.</p>
+          </div>
+
+          <div class="brand-stats">
+            <div class="stat">
+              <span class="stat-value">100%</span>
+              <span class="stat-label">Rastreável</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+              <span class="stat-value">3</span>
+              <span class="stat-label">Níveis de acesso</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+              <span class="stat-value">∞</span>
+              <span class="stat-label">Produtos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lado direito — formulário -->
+      <div class="login-form-side">
+        <div class="login-form-container">
+
+          <div class="form-header">
+            <h2>Entrar na conta</h2>
+            <p>Introduza as suas credenciais para continuar</p>
+          </div>
+
+          <form id="loginForm" novalidate>
+
+            <div class="field-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="utilizador@empresa.com"
+                autocomplete="email"
+                required
+              />
+              <span class="field-error" id="emailError"></span>
+            </div>
+
+            <div class="field-group">
+              <label for="senha">Senha</label>
+              <div class="input-password">
+                <input
+                  type="password"
+                  id="senha"
+                  name="senha"
+                  placeholder="••••••••"
+                  autocomplete="current-password"
+                  required
+                />
+                <button type="button" class="toggle-password" id="toggleSenha" aria-label="Mostrar senha">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                </button>
+              </div>
+              <span class="field-error" id="senhaError"></span>
+            </div>
+
+            <div id="formError" class="form-error hidden"></div>
+
+            <button type="submit" class="btn-primary" id="submitBtn">
+              <span id="btnText">Entrar</span>
+              <span id="btnLoader" class="btn-loader hidden"></span>
+            </button>
+
+          </form>
+
+          <p class="form-footer">
+            Winona Stock &copy; 2025 &mdash; Acesso restrito
+          </p>
+
+        </div>
+      </div>
+
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

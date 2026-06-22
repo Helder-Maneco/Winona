@@ -1,5 +1,5 @@
-    import dotenv from 'dotenv';
-    dotenv.config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 interface EnvConfig {
     database: {
@@ -43,7 +43,7 @@ const config: EnvConfig = {
 	env: process.env.NODE_ENV || 'development',
     },
     jwt: {
-	secret: process.env.JWT_SECRET || 'winona_secret_dev',
+	secret: getRequiredEnv('JWT_SECRET'),
 	expiresIn: process.env.JWT_EXPIRES_IN || '7d',
     },
     cors: {

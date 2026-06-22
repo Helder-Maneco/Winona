@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Winona Stock — Produtos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="/src/style.css">
+  </head>
+  <body class="app-page">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+          <rect width="40" height="40" rx="10" fill="#2563EB"/>
+          <path d="M10 28L20 12L30 28H10Z" fill="white" fill-opacity="0.9"/>
+          <rect x="15" y="22" width="10" height="6" fill="#2563EB"/>
+        </svg>
+        <span>Winona Stock</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="/dashboard.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+        <a href="/produtos.html" class="nav-item active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+          Produtos
+        </a>
+        <a href="/movimentacoes.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+          Movimentações
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar" id="userAvatar">A</div>
+          <div class="user-details">
+            <span class="user-name" id="userName">Admin</span>
+            <span class="user-role" id="userRole">admin</span>
+          </div>
+        </div>
+        <button class="btn-logout" id="logoutBtn" title="Sair">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main class="main-content">
+
+      <header class="page-header">
+        <div>
+          <h1>Produtos</h1>
+          <p>Gerencie o catálogo de produtos</p>
+        </div>
+        <button class="btn-primary btn-sm" id="btnNovoProduto">+ Novo Produto</button>
+      </header>
+
+      <!-- FILTROS -->
+      <div class="filters-bar">
+        <input type="text" id="searchInput" placeholder="Pesquisar por nome ou UME..." class="filter-input" />
+        <select id="filterCategoria" class="filter-select">
+          <option value="">Todas as categorias</option>
+        </select>
+        <select id="filterAtivo" class="filter-select">
+          <option value="true">Activos</option>
+          <option value="">Todos</option>
+          <option value="false">Inactivos</option>
+        </select>
+      </div>
+
+      <!-- TABELA -->
+      <div class="section-card">
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>UME</th>
+                <th>Categoria</th>
+                <th>Estoque Actual</th>
+                <th>Mínimo</th>
+                <th>Preço Venda</th>
+                <th>Status</th>
+                <th>Acções</th>
+              </tr>
+            </thead>
+            <tbody id="produtosTableBody">
+              <tr><td colspan="8" class="table-empty">A carregar...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- MODAL NOVO/EDITAR PRODUTO -->
+    <div class="modal-overlay hidden" id="modalOverlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 id="modalTitle">Novo Produto</h3>
+          <button class="modal-close" id="modalClose">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="produtoForm" novalidate>
+            <input type="hidden" id="produtoId" />
+
+            <div class="form-grid">
+              <div class="field-group">
+                <label>UME *</label>
+                <input type="text" id="fUme" placeholder="ex: PROD-001" />
+                <span class="field-error" id="fUmeError"></span>
+              </div>
+              <div class="field-group">
+                <label>Nome *</label>
+                <input type="text" id="fNome" placeholder="Nome do produto" />
+                <span class="field-error" id="fNomeError"></span>
+              </div>
+              <div class="field-group">
+                <label>Categoria</label>
+                <input type="text" id="fCategoria" placeholder="ex: Informática" />
+              </div>
+              <div class="field-group">
+                <label>Fornecedor</label>
+                <input type="text" id="fFornecedor" placeholder="Nome do fornecedor" />
+              </div>
+              <div class="field-group">
+                <label>Preço Compra (Kz)</label>
+                <input type="number" id="fPrecoCompra" placeholder="0.00" min="0" step="0.01" />
+              </div>
+              <div class="field-group">
+                <label>Preço Venda (Kz)</label>
+                <input type="number" id="fPrecoVenda" placeholder="0.00" min="0" step="0.01" />
+              </div>
+              <div class="field-group">
+                <label>Estoque Mínimo</label>
+                <input type="number" id="fEstoqueMinimo" placeholder="0" min="0" />
+              </div>
+              <div class="field-group">
+                <label>Estoque Máximo</label>
+                <input type="number" id="fEstoqueMaximo" placeholder="0" min="0" />
+              </div>
+              <div class="field-group">
+                <label>Lead Time (dias)</label>
+                <input type="number" id="fLeadTime" placeholder="0" min="0" />
+              </div>
+              <div class="field-group field-group-check">
+                <label class="check-label">
+                  <input type="checkbox" id="fPossuiValidade" />
+                  Possui validade
+                </label>
+              </div>
+              <div class="field-group" id="fieldDiasValidade" style="display:none">
+                <label>Dias de validade</label>
+                <input type="number" id="fDiasValidade" placeholder="0" min="0" />
+              </div>
+            </div>
+
+            <div class="modal-actions">
+              <button type="button" class="btn-secondary" id="btnCancelar">Cancelar</button>
+              <button type="submit" class="btn-primary btn-sm" id="btnSalvar">Salvar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/produtos.js"></script>
+  </body>
+</html>

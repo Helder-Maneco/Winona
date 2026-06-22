@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Winona Stock — Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="/src/style.css">
+  </head>
+  <body class="app-page">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+          <rect width="40" height="40" rx="10" fill="#2563EB"/>
+          <path d="M10 28L20 12L30 28H10Z" fill="white" fill-opacity="0.9"/>
+          <rect x="15" y="22" width="10" height="6" fill="#2563EB"/>
+        </svg>
+        <span>Winona Stock</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="/dashboard.html" class="nav-item active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+        <a href="/produtos.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+          Produtos
+        </a>
+        <a href="/movimentacoes.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+          Movimentações
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar" id="userAvatar">A</div>
+          <div class="user-details">
+            <span class="user-name" id="userName">Admin</span>
+            <span class="user-role" id="userRole">admin</span>
+          </div>
+        </div>
+        <button class="btn-logout" id="logoutBtn" title="Sair">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+
+      <header class="page-header">
+        <div>
+          <h1>Dashboard</h1>
+          <p>Visão geral do seu estoque</p>
+        </div>
+      </header>
+
+      <!-- CARDS DE MÉTRICAS -->
+      <section class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-icon blue">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+          </div>
+          <div class="metric-body">
+            <span class="metric-label">Total de Produtos</span>
+            <span class="metric-value" id="totalProdutos">—</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon green">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <div class="metric-body">
+            <span class="metric-label">Entradas (mês)</span>
+            <span class="metric-value" id="totalEntradas">—</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon orange">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+          </div>
+          <div class="metric-body">
+            <span class="metric-label">Saídas (mês)</span>
+            <span class="metric-value" id="totalSaidas">—</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon red">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div class="metric-body">
+            <span class="metric-label">Alertas Activos</span>
+            <span class="metric-value" id="totalAlertas">—</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- TABELA DE ALERTAS -->
+      <section class="section-card">
+        <div class="section-header">
+          <h2>Produtos com estoque baixo</h2>
+          <a href="/produtos.html" class="btn-link">Ver todos</a>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>UME</th>
+                <th>Estoque Actual</th>
+                <th>Estoque Mínimo</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="alertasTableBody">
+              <tr><td colspan="5" class="table-empty">A carregar...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+
+    <script type="module" src="/src/dashboard.js"></script>
+  </body>
+</html>

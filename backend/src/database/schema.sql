@@ -1,15 +1,15 @@
---
---
 -- =============================
 -- WINONA STOCK - BANCO DE DADOS
 -- =============================
+
+CREATE TYPE perfil_tipo AS ENUM ('admin', 'gestor', 'operador', 'cliente');
 
 CREATE TABLE usuarios (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     senha VARCHAR(255) NOT NULL,
-    perfil VARCHAR(20) CHECK (perfil IN('admin', 'gestor', 'operador', 'cliente')),
+    perfil perfil_tipo NOT NULL,
     ativo BOOLEAN DEFAULT true,
     criado_em TIMESTAMP DEFAULT NOW(),
     atualizado_em TIMESTAMP DEFAULT NOW()
@@ -69,3 +69,16 @@ CREATE INDEX idx_produtos_ume ON produtos(ume);
 CREATE INDEX idx_movimentacoes_produto ON movimentacoes(produto_id);
 CREATE INDEX idx_movimentacoes_data ON movimentacoes(data);
 CREATE INDEX idx_usuarios_email ON usuarios(email);
+
+-- Trigger: atualiza atualizado_em automaticamente
+CREATE OR REPLACE FUNCTION fn_update_atualizado_em()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.atualizado_em = NOW();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_usuarios_atualizado_em
+BEFORE UPDATE ON usuarios
+FOR EACH ROW EXECUTE FUNCTION fn_update_atualizado_em();

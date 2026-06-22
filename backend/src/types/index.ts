@@ -11,7 +11,7 @@ export interface Usuario {
   perfil: 'admin' | 'gestor' | 'operador' | 'cliente'; // ← Faltava 'admin'
   ativo: boolean;
   criado_em: Date;
-  atualizado_em: Date; // ← minúscula (padrão)
+  atualizado_em: Date; 
 }
 
 // Campo dos Produtos
@@ -60,7 +60,7 @@ export interface Alerta { // ← singular (cada alerta)
 ||PERMISSÕES POR PERFIL   ||
 ===========================*/
 
-export type Permissoes = { // ← maiúscula (tipos começam com maiúscula)
+export type Permissoes = { 
   admin: {
     ver_dashboard: true; // ← corrigido typo
     ver_relatorios: true;

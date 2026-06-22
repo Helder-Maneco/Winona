@@ -1,24 +1,33 @@
 {
-  "name": "backend",
+  "name": "winona-backend",
   "version": "1.0.0",
   "description": "Winona Stock - Sistema de gestão de estoque",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc",
     "dev": "tsx watch src/server.ts",
+    "build": "tsc",
     "start": "node dist/server.js",
-    "test:db": "tsx src/config/test.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:db": "tsx src/config/test.ts"
   },
-  "keywords": [
-    "inventory",
-    "stock",
-    "management"
-  ],
+  "keywords": ["inventory", "stock", "management"],
   "author": "Flix Codes",
   "license": "ISC",
-  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.21.0"
+  },
   "devDependencies": {
-    "tsx": "^4.21.0"
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^25.9.1",
+    "@types/pg": "^8.20.0",
+    "tsx": "^4.22.3",
+    "typescript": "^6.0.3"
   }
 }

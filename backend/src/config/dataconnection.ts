@@ -1,6 +1,5 @@
    import {Pool, PoolConfig} from 'pg';
    import config from './env';
-import { console } from 'inspector/promises';
 
 const poolConfig: PoolConfig = {
     host: config.database.host,
