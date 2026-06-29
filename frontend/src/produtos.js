@@ -23,6 +23,7 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
 
 // --- Estado ---
 let produtos = [];
+let categorias = [];
 let editandoId = null;
 
 // --- Helper fetch ---
@@ -45,36 +46,52 @@ async function apiFetch(path, options = {}) {
     return res.json();
 }
 
+// --- Carrega categorias ---
+async function carregarCategorias() {
+    categorias = await apiFetch('/api/v1/categorias') || [];
+
+    const selectForm     = document.getElementById('fCategoria');
+    const selectFiltro   = document.getElementById('filterCategoria');
+    const valorActualForm   = selectForm.value;
+    const valorActualFiltro = selectFiltro.value;
+
+    // Select do formulário
+    selectForm.innerHTML = '<option value="">Sem categoria</option>';
+    categorias.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = c.nome;
+        if (String(c.id) === valorActualForm) opt.selected = true;
+        selectForm.appendChild(opt);
+    });
+
+    // Select do filtro
+    selectFiltro.innerHTML = '<option value="">Todas as categorias</option>';
+    categorias.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = c.nome;
+        if (String(c.id) === valorActualFiltro) opt.selected = true;
+        selectFiltro.appendChild(opt);
+    });
+}
+
 // --- Carrega produtos ---
 async function carregarProdutos() {
     const tbody = document.getElementById('produtosTableBody');
     tbody.innerHTML = `<tr><td colspan="8" class="table-empty">A carregar...</td></tr>`;
 
-    const ativo    = document.getElementById('filterAtivo').value;
-    const search   = document.getElementById('searchInput').value.trim();
-    const categoria = document.getElementById('filterCategoria').value;
+    const ativo      = document.getElementById('filterAtivo').value;
+    const search     = document.getElementById('searchInput').value.trim();
+    const categoriaId = document.getElementById('filterCategoria').value;
 
     let query = '?';
-    if (ativo)    query += `ativo=${ativo}&`;
-    if (search)   query += `search=${encodeURIComponent(search)}&`;
-    if (categoria) query += `categoria=${encodeURIComponent(categoria)}&`;
+    if (ativo)       query += `ativo=${ativo}&`;
+    if (search)      query += `search=${encodeURIComponent(search)}&`;
+    if (categoriaId) query += `categoria_id=${categoriaId}&`;
 
     produtos = await apiFetch(`/api/v1/produtos${query}`);
-
     if (!produtos) return;
-
-    // Preenche filtro de categorias
-    const categorias = [...new Set(produtos.map(p => p.categoria).filter(Boolean))];
-    const select = document.getElementById('filterCategoria');
-    const valorActual = select.value;
-    select.innerHTML = '<option value="">Todas as categorias</option>';
-    categorias.forEach(c => {
-        const opt = document.createElement('option');
-        opt.value = c;
-        opt.textContent = c;
-        if (c === valorActual) opt.selected = true;
-        select.appendChild(opt);
-    });
 
     renderTabela(produtos);
 }
@@ -103,6 +120,8 @@ function renderTabela(lista) {
             ? Number(p.preco_venda).toLocaleString('pt-AO', { style: 'currency', currency: 'AOA' })
             : '—';
 
+        const categoriaNome = categorias.find(c => c.id === p.categoria_id)?.nome || '—';
+
         const acoes = podeEditar ? `
             <div class="table-actions">
                 <button class="btn-icon" onclick="abrirEdicao(${p.id})" title="Editar">
@@ -117,7 +136,7 @@ function renderTabela(lista) {
             <tr>
                 <td>${p.nome}</td>
                 <td class="mono">${p.ume}</td>
-                <td>${p.categoria || '—'}</td>
+                <td>${categoriaNome}</td>
                 <td class="mono">${p.quantidade_atual}</td>
                 <td class="mono">${p.estoque_minimo}</td>
                 <td class="mono">${preco}</td>
@@ -144,6 +163,7 @@ function fecharModal() {
     editandoId = null;
     document.getElementById('produtoId').value = '';
     document.getElementById('fieldDiasValidade').style.display = 'none';
+    document.getElementById('novaCategoriaField').classList.add('hidden');
     document.getElementById('fUmeError').textContent = '';
     document.getElementById('fNomeError').textContent = '';
 }
@@ -155,7 +175,6 @@ document.getElementById('btnNovoProduto').addEventListener('click', () => {
 
 document.getElementById('modalClose').addEventListener('click', fecharModal);
 document.getElementById('btnCancelar').addEventListener('click', fecharModal);
-
 modalOverlay.addEventListener('click', (e) => {
     if (e.target === modalOverlay) fecharModal();
 });
@@ -165,22 +184,53 @@ document.getElementById('fPossuiValidade').addEventListener('change', (e) => {
     document.getElementById('fieldDiasValidade').style.display = e.target.checked ? 'block' : 'none';
 });
 
+// Toggle nova categoria
+document.getElementById('btnNovaCategoria').addEventListener('click', () => {
+    const field = document.getElementById('novaCategoriaField');
+    field.classList.toggle('hidden');
+});
+
+// Confirmar nova categoria
+document.getElementById('btnConfirmarCategoria').addEventListener('click', async () => {
+    const input = document.getElementById('fNovaCategoriaInput');
+    const nome = input.value.trim();
+
+    if (!nome) return;
+
+    const resultado = await apiFetch('/api/v1/categorias', {
+        method: 'POST',
+        body: JSON.stringify({ nome })
+    });
+
+    if (resultado?.error) {
+        alert(resultado.error);
+        return;
+    }
+
+    input.value = '';
+    document.getElementById('novaCategoriaField').classList.add('hidden');
+    await carregarCategorias();
+
+    // Selecciona automaticamente a nova categoria
+    document.getElementById('fCategoria').value = resultado.id;
+});
+
 // --- Abre edição ---
 window.abrirEdicao = function(id) {
     const p = produtos.find(x => x.id === id);
     if (!p) return;
 
     editandoId = id;
-    document.getElementById('produtoId').value = id;
-    document.getElementById('fUme').value          = p.ume;
-    document.getElementById('fNome').value         = p.nome;
-    document.getElementById('fCategoria').value    = p.categoria || '';
-    document.getElementById('fFornecedor').value   = p.fornecedor || '';
+    document.getElementById('produtoId').value   = id;
+    document.getElementById('fUme').value        = p.ume;
+    document.getElementById('fNome').value       = p.nome;
+    document.getElementById('fCategoria').value  = p.categoria_id || '';
+    document.getElementById('fFornecedor').value = p.fornecedor || '';
     document.getElementById('fPrecoCompra').value  = p.preco_compra || '';
     document.getElementById('fPrecoVenda').value   = p.preco_venda || '';
     document.getElementById('fEstoqueMinimo').value = p.estoque_minimo || 0;
     document.getElementById('fEstoqueMaximo').value = p.estoque_maximo || 0;
-    document.getElementById('fLeadTime').value     = p.lead_time_dias || 0;
+    document.getElementById('fLeadTime').value   = p.lead_time_dias || 0;
     document.getElementById('fPossuiValidade').checked = p.possui_validade;
 
     if (p.possui_validade) {
@@ -194,7 +244,6 @@ window.abrirEdicao = function(id) {
 // --- Desactiva produto ---
 window.desativarProduto = async function(id, nome) {
     if (!confirm(`Desactivar "${nome}"?`)) return;
-
     await apiFetch(`/api/v1/produtos/${id}`, { method: 'DELETE' });
     carregarProdutos();
 };
@@ -203,7 +252,6 @@ window.desativarProduto = async function(id, nome) {
 produtoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Validação básica
     let valido = true;
     document.getElementById('fUmeError').textContent = '';
     document.getElementById('fNomeError').textContent = '';
@@ -219,11 +267,12 @@ produtoForm.addEventListener('submit', async (e) => {
     if (!valido) return;
 
     const possuiValidade = document.getElementById('fPossuiValidade').checked;
+    const categoriaId    = document.getElementById('fCategoria').value;
 
     const body = {
         ume:             document.getElementById('fUme').value.trim(),
         nome:            document.getElementById('fNome').value.trim(),
-        categoria:       document.getElementById('fCategoria').value.trim() || null,
+        categoria_id:    categoriaId ? parseInt(categoriaId) : null,
         fornecedor:      document.getElementById('fFornecedor').value.trim() || null,
         preco_compra:    parseFloat(document.getElementById('fPrecoCompra').value) || null,
         preco_venda:     parseFloat(document.getElementById('fPrecoVenda').value) || null,
@@ -249,7 +298,7 @@ produtoForm.addEventListener('submit', async (e) => {
     carregarProdutos();
 });
 
-// --- Filtros em tempo real ---
+// --- Filtros ---
 let searchTimeout;
 document.getElementById('searchInput').addEventListener('input', () => {
     clearTimeout(searchTimeout);
@@ -260,4 +309,9 @@ document.getElementById('filterCategoria').addEventListener('change', carregarPr
 document.getElementById('filterAtivo').addEventListener('change', carregarProdutos);
 
 // --- Inicia ---
-carregarProdutos();
+async function init() {
+    await carregarCategorias();
+    await carregarProdutos();
+}
+
+init();

@@ -120,10 +120,22 @@
                 <input type="text" id="fNome" placeholder="Nome do produto" />
                 <span class="field-error" id="fNomeError"></span>
               </div>
-              <div class="field-group">
-                <label>Categoria</label>
-                <input type="text" id="fCategoria" placeholder="ex: Informática" />
-              </div>
+	      <div class="field-group">
+  <label>Categoria</label>
+  <select id="fCategoria" class="filter-select" style="width:100%">
+    <option value="">Sem categoria</option>
+  </select>
+  <button type="button" class="btn-link" id="btnNovaCategoria" style="margin-top:6px;font-size:12px">
+    + Nova categoria
+  </button>
+</div>
+<div class="field-group hidden" id="novaCategoriaField">
+  <label>Nome da nova categoria</label>
+  <div style="display:flex;gap:8px">
+    <input type="text" id="fNovaCategoriaInput" placeholder="ex: Informática" style="flex:1" />
+    <button type="button" class="btn-primary btn-sm" id="btnConfirmarCategoria">Adicionar</button>
+  </div>
+</div>
               <div class="field-group">
                 <label>Fornecedor</label>
                 <input type="text" id="fFornecedor" placeholder="Nome do fornecedor" />

@@ -49,45 +49,37 @@
       </div>
     </aside>
 
-    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- CONTEÚDO -->
     <main class="main-content">
 
       <header class="page-header">
         <div>
           <h1>Dashboard</h1>
-          <p>Visão geral do seu estoque</p>
+          <p>Visão geral do estoque e da operação.</p>
         </div>
       </header>
 
-      <!-- CARDS DE MÉTRICAS -->
-      <section class="metrics-grid">
+      <!-- MÉTRICAS -->
+      <section class="metrics-grid-5">
         <div class="metric-card">
           <div class="metric-icon blue">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
           </div>
           <div class="metric-body">
-            <span class="metric-label">Total de Produtos</span>
-            <span class="metric-value" id="totalProdutos">—</span>
+            <span class="metric-label">Estoque Total (Kz)</span>
+            <span class="metric-value" id="mEstoqueTotal">—</span>
+            <span class="metric-sub">Valor total disponível</span>
           </div>
         </div>
 
         <div class="metric-card">
           <div class="metric-icon green">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
           </div>
           <div class="metric-body">
-            <span class="metric-label">Entradas (mês)</span>
-            <span class="metric-value" id="totalEntradas">—</span>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-icon orange">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
-          </div>
-          <div class="metric-body">
-            <span class="metric-label">Saídas (mês)</span>
-            <span class="metric-value" id="totalSaidas">—</span>
+            <span class="metric-label">Itens em Estoque</span>
+            <span class="metric-value" id="mItens">—</span>
+            <span class="metric-sub">Itens disponíveis</span>
           </div>
         </div>
 
@@ -96,36 +88,159 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
           </div>
           <div class="metric-body">
-            <span class="metric-label">Alertas Activos</span>
-            <span class="metric-value" id="totalAlertas">—</span>
+            <span class="metric-label">Rupturas</span>
+            <span class="metric-value" id="mRupturas">—</span>
+            <span class="metric-sub">Itens em falta</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon purple">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="metric-body">
+            <span class="metric-label">Armazéns Activos</span>
+            <span class="metric-value" id="mArmazens">—</span>
+            <span class="metric-sub">100% do total</span>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon cyan">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <div class="metric-body">
+            <span class="metric-label">Entradas (mês)</span>
+            <span class="metric-value" id="mEntradas">—</span>
+            <span class="metric-sub">Total movimentado</span>
           </div>
         </div>
       </section>
 
-      <!-- TABELA DE ALERTAS -->
-      <section class="section-card">
-        <div class="section-header">
-          <h2>Produtos com estoque baixo</h2>
-          <a href="/produtos.html" class="btn-link">Ver todos</a>
-        </div>
+      <!-- GRELHA CENTRAL -->
+      <div class="dash-grid">
 
-        <div class="table-wrapper">
+        <!-- Estoque por Armazém -->
+        <div class="section-card dash-armazens">
+          <div class="section-header">
+            <h2>Estoque por Armazém</h2>
+          </div>
           <table class="data-table">
             <thead>
               <tr>
-                <th>Produto</th>
-                <th>UME</th>
-                <th>Estoque Actual</th>
-                <th>Estoque Mínimo</th>
+                <th>Armazém</th>
+                <th>Valor Disponível</th>
+                <th>Rupturas</th>
                 <th>Status</th>
               </tr>
             </thead>
-            <tbody id="alertasTableBody">
-              <tr><td colspan="5" class="table-empty">A carregar...</td></tr>
+            <tbody id="armazensTableBody">
+              <tr><td colspan="4" class="table-empty">A carregar...</td></tr>
+            </tbody>
+          </table>
+          <a href="#" class="dash-link">Ver todos os armazéns →</a>
+        </div>
+
+        <!-- Donut: Rupturas por Categoria -->
+        <div class="section-card dash-donut">
+          <div class="section-header">
+            <h2>Rupturas por Categoria</h2>
+          </div>
+          <div class="chart-donut-wrap">
+            <canvas id="chartDonut"></canvas>
+          </div>
+          <a href="/produtos.html" class="dash-link">Ver relatório completo →</a>
+        </div>
+
+        <!-- Linha: Evolução do Estoque -->
+        <div class="section-card dash-linha">
+          <div class="section-header">
+            <h2>Evolução do Estoque (Kz)</h2>
+          </div>
+          <div class="chart-linha-wrap">
+            <canvas id="chartLinha"></canvas>
+          </div>
+          <a href="/movimentacoes.html" class="dash-link">Ver mais detalhes →</a>
+        </div>
+
+      </div>
+
+      <!-- ATALHOS -->
+      <div class="atalhos-grid">
+        <a href="/produtos.html" class="atalho-card">
+          <div class="atalho-icon blue">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+          </div>
+          <div>
+            <span class="atalho-titulo">Novo Produto</span>
+            <span class="atalho-sub">Cadastrar novo produto</span>
+          </div>
+        </a>
+        <a href="/movimentacoes.html" class="atalho-card">
+          <div class="atalho-icon green">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+          </div>
+          <div>
+            <span class="atalho-titulo">Entrada de Estoque</span>
+            <span class="atalho-sub">Registar entrada de produtos</span>
+          </div>
+        </a>
+        <a href="/movimentacoes.html" class="atalho-card">
+          <div class="atalho-icon orange">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/></svg>
+          </div>
+          <div>
+            <span class="atalho-titulo">Saída de Estoque</span>
+            <span class="atalho-sub">Registar saída de produtos</span>
+          </div>
+        </a>
+        <a href="/produtos.html" class="atalho-card">
+          <div class="atalho-icon red">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+          </div>
+          <div>
+            <span class="atalho-titulo">Ver Alertas</span>
+            <span class="atalho-sub">Produtos com stock baixo</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- GRELHA INFERIOR -->
+      <div class="dash-grid-bottom">
+
+        <!-- Últimos Movimentos -->
+        <div class="section-card">
+          <div class="section-header">
+            <h2>Últimos Movimentos</h2>
+            <a href="/movimentacoes.html" class="btn-link">Ver todos →</a>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody id="ultimosMovTableBody">
+              <tr><td colspan="4" class="table-empty">A carregar...</td></tr>
             </tbody>
           </table>
         </div>
-      </section>
+
+        <!-- Alertas e Notificações -->
+        <div class="section-card">
+          <div class="section-header">
+            <h2>Alertas e Notificações</h2>
+            <a href="/produtos.html" class="btn-link">Ver todos →</a>
+          </div>
+          <div id="alertasList" class="alertas-list">
+            <p class="table-empty">A carregar...</p>
+          </div>
+        </div>
+
+      </div>
 
     </main>
 

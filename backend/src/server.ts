@@ -4,10 +4,12 @@ import config from './config/env';
 import pool from './config/dataconnection';
 import authRoutes from './routes/auth';
 import produtosRoutes from './routes/produtos';
+import categoriasRoutes from './routes/categorias';
 import movimentacoesRoutes from './routes/movimentos';
+import lojasRoutes from './routes/lojas';
 
 const app: Application = express();
-
+app.use('/api/v1/categorias', categoriasRoutes);
 //=====================
 // MIDDLEWARE
 //=====================
@@ -51,6 +53,7 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/produtos', produtosRoutes);
 app.use('/api/v1/movimentacoes', movimentacoesRoutes);
+app.use('/api/v1/armazens', lojasRoutes);
 
 // Health check - Verifica conexão com banco
 app.get('/health', async (req: Request, res: Response) => {
